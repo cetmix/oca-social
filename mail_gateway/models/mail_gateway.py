@@ -1,7 +1,10 @@
 # Copyright 2024 Dixmit
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+import logging
+
 from odoo import api, fields, models, tools
 
+_logger = logging.getLogger(__name__)
 
 class MailGateway(models.Model):
     _name = "mail.gateway"
@@ -117,7 +120,13 @@ class MailGateway(models.Model):
                 ("gateway_type", "=", gateway_type),
             ]
         ):
+            _logger.warning(
+                ">>> Record %s", record.read()
+            )
             result[record.webhook_key] = record._get_gateway_data()
+        _logger.warning(
+                ">>> Result %s", result
+            )
         return result
 
     def _get_gateway_data(self):
@@ -130,6 +139,9 @@ class MailGateway(models.Model):
 
     @api.model
     def _get_gateway(self, key, state="integrated", gateway_type=False):
+        _logger.warning(
+                ">>> Key %s", key
+            )
         # We are using cache in order to avoid an exploit
         if not key:
             return False
