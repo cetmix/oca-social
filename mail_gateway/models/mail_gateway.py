@@ -140,7 +140,7 @@ class MailGateway(models.Model):
     @api.model
     def _get_gateway(self, key, state="integrated", gateway_type=False):
         _logger.warning(
-                ">>> Key %s", key
+                ">>> Key %s state %s type", key, state, type
             )
         # We are using cache in order to avoid an exploit
         if not key:
