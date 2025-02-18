@@ -42,6 +42,7 @@ class MailGatewayWhatsappService(models.AbstractModel):
     def _verify_update(self, bot_data, kwargs):
         signature = request.httprequest.headers.get("x-hub-signature-256")
         _logger.info(">>> Bot data %s", bot_data)
+        _logger.info(">>> Request data %s", request.httprequest.data)
         _logger.info(">>> Signature %s", signature)
         _logger.info(">>> Computed signature %s", "sha256=%s"
             % hmac.new(
